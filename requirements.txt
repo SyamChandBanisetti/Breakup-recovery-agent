@@ -2,3 +2,4 @@ streamlit
 agno
 python-dotenv
 google-genai
+duckduckgo-search
