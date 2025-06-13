@@ -168,42 +168,6 @@ if st.button("💝 Get Recovery Plan"):
 
     st.success("✅ Personalized Recovery Plan Generated! Wishing you strength 💖")
 
-# ---------------------- 💬 Continuous Chat Support -----------------------
-
-st.divider()
-st.markdown("## 🧠 Ongoing Support Chat")
-st.markdown("Chat with your personal therapist whenever you need comfort or advice.")
-
-# Setup chat session state
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
-
-# Input for live chat
-user_chat_input = st.chat_input("Type your message here...")
-
-if user_chat_input:
-    st.session_state.chat_history.append(("user", user_chat_input))
-
-    with st.spinner("💬 Therapist typing..."):
-        try:
-            chat_prompt = "\n".join(
-                [f"User: {m[1]}" if m[0] == "user" else f"Therapist: {m[1]}" for m in st.session_state.chat_history]
-            )
-            chat_response = therapist.run(message=chat_prompt)
-            reply = chat_response.content.strip()
-            st.session_state.chat_history.append(("therapist", reply))
-        except Exception as e:
-            reply = "Something went wrong. Please try again."
-            st.session_state.chat_history.append(("therapist", reply))
-            logger.error(f"Chatbot error: {e}")
-
-# Display chat
-for role, msg in st.session_state.chat_history:
-    if role == "user":
-        st.chat_message("🧍 You").markdown(msg)
-    else:
-        st.chat_message("🧠 Therapist").markdown(msg)
-
 # Footer
 st.divider()
 st.markdown("<center><small>Made with ❤️ by the Breakup Recovery Squad</small></center>", unsafe_allow_html=True)
